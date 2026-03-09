@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YMYWS's Cafe</title>
+  <style>
+    body { font-family: sans-serif; background: #fffaf0; text-align: center; margin: 0; }
+    header { background: #ff7f50; color: white; padding: 15px; }
+    img { width: 100px; border-radius: 50%; margin: 10px; }
+    .section { background: #fff0e0; margin: 15px auto; padding: 15px; width: 90%; max-width: 500px; border-radius: 10px; }
+    button { background: #ff7f50; color: white; border: none; padding: 6px 12px; border-radius: 5px; margin-top: 5px; }
+    ul { text-align: left; padding-left: 20px; }
+    footer { background: #ff7f50; color: white; padding: 10px; margin-top: 20px; }
+    select, input { padding: 6px; width: 90%; margin: 5px auto; border-radius: 5px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🍽️ YMYWS's Cafe</h1>
+  <img src="https://cdn.pixabay.com/photo/2016/03/05/19/02/hamburger-1238246_1280.jpg" alt="Cafe Image">
+</header>
+
+<div class="section">
+  <h3>🍕 Pizza</h3>
+  <ul>
+    <li>Vegetable Pizza - 220 birr <button onclick="add('Vegetable Pizza', 220)">Add</button></li>
+    <li>Chicken Pizza - 330 birr <button onclick="add('Chicken Pizza', 330)">Add</button></li>
+  </ul>
+  <h3>🍔 Burger</h3>
+  <ul>
+    <li>Veg Burger - 210 birr <button onclick="add('Veg Burger', 210)">Add</button></li>
+    <li>Cheese Burger - 245 birr <button onclick="add('Cheese Burger', 245)">Add</button></li>
+  </ul>
+  <h3>🍝 Pasta</h3>
+  <ul>
+    <li>Lasagna Pasta - 220 birr <button onclick="add('Lasagna Pasta', 220)">Add</button></li>
+    <li>Chicken Pasta - 200 birr <button onclick="add('Chicken Pasta', 200)">Add</button></li>
+  </ul>
+  <h3>🥤 Drink</h3>
+  <select onchange="addDrink(this)">
+    <option value="">-- Select a drink --</option>
+    <option value="Coke">Coke - 25 birr</option>
+    <option value="Sprite">Sprite - 25 birr</option>
+    <option value="Water">Water - 15 birr</option>
+  </select>
+</div>
+
+<div class="section">
+  <h3>🛒 Your Cart</h3>
+  <ul id="cart"></ul>
+  <p><strong>Total: <span id="total">0</span> birr</strong></p>
+</div>
+<form class="section" method="POST" action="order.php">
+  <h3>📦 Place Order</h3>
+
+  <input type="text" name="name" placeholder="Name" required><br>
+  <input type="text" name="address" placeholder="Address" required><br>
+  <input type="tel" name="phone" placeholder="Phone" required><br>
+
+  <input type="hidden" name="items" id="items">
+  <input type="hidden" name="total" id="totalInput">
+
+  <button type="submit">Submit</button>
+</form>
+
+<footer>
+  <p>📞 123-456-7890 | 🏠 Woliso Town</p>
+</footer>
+
+<script>
+  let total = 0;
+  let cartItems = [];
+
+function add(item, price) {
+  const cart = document.getElementById("cart");
+  cart.innerHTML += `<li>${item} - ${price} birr</li>`;
+
+  cartItems.push(item);
+  total += price;
+
+  document.getElementById("total").textContent = total;
+  document.getElementById("items").value = cartItems.join(", ");
+  document.getElementById("totalInput").value = total;
+}
+
+
+  function addDrink(select) {
+    if (select.value) {
+      let price = select.value === "Water" ? 15 : 25;
+      add(select.value, price);
+      select.selectedIndex = 0;
+    }
+  }
+</script>
+
+</body>
+</html>
